@@ -1,0 +1,20 @@
+pk <- read.table("ccounts.rpkm.tab", header=T, sep="\t", row.names=1)
+pk_thou <- subset(pk, pk$length >= 1000 & pk$rpkm > 0)
+pk_nine <- subset(pk, pk$length >= 900 & pk$rpkm > 0)
+suma_thou <- sum(pk_thou$rpkm)/1000000
+suma_nine <- sum(pk_nine$rpkm)/1000000
+average_thou <- mean(pk_thou$rpkm)
+average_nine <- mean(pk_nine$rpkm)
+SD_thou <- sd(pk_thou$rpkm)
+SD_nine <- sd(pk_nine$rpkm)
+SEM_thou <- sd(pk_thou$rpkm)/sqrt(length(pk_thou$rpkm))
+SEM_nine <- sd(pk_nine$rpkm)/sqrt(length(pk_nine$rpkm))
+print (c("total Genes higher than 900bp", dim(pk_thou)[1]))
+print (c("total Genes higher than 1000bp", dim(pk_nine)[1]))
+print (c("The sum of rpkm HT(bp)", suma_thou))
+print (c("The sum of rpkm HN(bp)", suma_nine))
+print (c("average RPKM HT", average_thou, "+/-", SEM_thou))
+print (c("average RPKM HN", average_nine, "+/-", SEM_nine))
+write.table(pk_thou, "rpkm.high.1000.tab", sep="\t", quote=F)
+write.table(pk_nine, "rpkm.high.900.tab", sep="\t", quote=F)
+
